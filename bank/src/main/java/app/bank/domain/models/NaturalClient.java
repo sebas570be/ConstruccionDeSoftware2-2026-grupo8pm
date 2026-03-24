@@ -12,4 +12,5 @@ public class NaturalClient extends Person {
     private String username;
     private String password;
     private UserStatus status;
+    private User systemUser;
 }
