@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Setter
@@ -14,7 +15,7 @@ public class Transfer {
     private long id;
     private BankAccount originAccount;
     private BankAccount destinationAccount;
-    private double amount;
+    private BigDecimal amount;
     private Timestamp creationDate;
     private Timestamp approvalDate;
     private TransferStatus status;

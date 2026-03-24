@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 @Setter
@@ -16,7 +17,7 @@ public class BankAccount {
     private String accountNumber;
     private AccountType accountType;
     private String ownerId;
-    private double currentBalance;
+    private BigDecimal currentBalance;
     private Currency currency;
     private AccountStatus status;
     private Date openingDate;
