@@ -7,3 +7,4 @@ public interface LoanPort {
     public void save(Loan loan);
     public Loan findById(long id);
 }
+
