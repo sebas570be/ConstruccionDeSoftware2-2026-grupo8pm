@@ -7,7 +7,6 @@ import app.bank.domain.models.Loan;
 import app.bank.domain.models.User;
 import app.bank.domain.models.enums.Role;
 import app.bank.domain.ports.LoanPort;
-import app.bank.domain.ports.UserPort;
 
 import java.math.BigDecimal;
 
@@ -16,12 +15,9 @@ public class ApproveLoan {
 
     @Autowired
     private LoanPort loanPort;
-    @Autowired
-    private UserPort userPort;
 
-    public ApproveLoan(LoanPort loanPort, UserPort userPort) {
+    public ApproveLoan(LoanPort loanPort) {
         this.loanPort = loanPort;
-        this.userPort = userPort;
     }
 
     public void approveLoan(long loanId, User analyst, BigDecimal approvedAmount, BigDecimal interestRate) throws BusinessException {

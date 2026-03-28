@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import app.bank.domain.exceptions.BusinessException;
 import app.bank.domain.models.BankAccount;
-import app.bank.domain.models.enums.UserStatus;
 import app.bank.domain.ports.BankAccountPort;
 import app.bank.domain.ports.NaturalClientPort;
 import app.bank.domain.ports.CompanyPort;
