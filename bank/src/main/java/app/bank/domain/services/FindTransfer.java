@@ -2,7 +2,7 @@ package app.bank.domain.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import app.bank.domain.exceptions.BusinessException;
+import app.bank.domain.exceptions.NotFoundException;
 import app.bank.domain.models.Transfer;
 import app.bank.domain.ports.TransferPort;
 
@@ -16,11 +16,12 @@ public class FindTransfer {
         this.transferPort = transferPort;
     }
 
-    public Transfer findById(long id) throws BusinessException {
+    public Transfer findById(long id) throws NotFoundException {
         Transfer transfer = transferPort.findById(id);
         if (transfer == null) {
-            throw new BusinessException("No existe una transferencia con ese ID");
+            throw new NotFoundException("No existe una transferencia con ese ID");
         }
         return transfer;
     }
 }
+

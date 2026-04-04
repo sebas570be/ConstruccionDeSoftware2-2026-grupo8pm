@@ -2,7 +2,7 @@ package app.bank.domain.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import app.bank.domain.exceptions.BusinessException;
+import app.bank.domain.exceptions.NotFoundException;
 import app.bank.domain.models.NaturalClient;
 import app.bank.domain.ports.NaturalClientPort;
 
@@ -16,10 +16,10 @@ public class FindNaturalClient {
         this.naturalClientPort = naturalClientPort;
     }
 
-    public NaturalClient findByIdentificationNumber(String identificationNumber) throws BusinessException {
+    public NaturalClient findByIdentificationNumber(String identificationNumber) throws NotFoundException {
         NaturalClient client = naturalClientPort.findByIdentificationNumber(identificationNumber);
         if (client == null) {
-            throw new BusinessException("No existe un cliente con ese número de identificación");
+            throw new NotFoundException("No existe un cliente con ese número de identificación");
         }
         return client;
     }

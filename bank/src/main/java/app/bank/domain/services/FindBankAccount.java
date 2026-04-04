@@ -2,7 +2,7 @@ package app.bank.domain.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import app.bank.domain.exceptions.BusinessException;
+import app.bank.domain.exceptions.NotFoundException;
 import app.bank.domain.models.BankAccount;
 import app.bank.domain.ports.BankAccountPort;
 
@@ -16,12 +16,11 @@ public class FindBankAccount {
         this.bankAccountPort = bankAccountPort;
     }
 
-    public BankAccount findByAccountNumber(String accountNumber) throws BusinessException {
+    public BankAccount findByAccountNumber(String accountNumber) throws NotFoundException {
         BankAccount account = bankAccountPort.findByAccountNumber(accountNumber);
         if (account == null) {
-            throw new BusinessException("No existe una cuenta con ese número");
+            throw new NotFoundException("No existe una cuenta con ese número");
         }
         return account;
     }
 }
-
