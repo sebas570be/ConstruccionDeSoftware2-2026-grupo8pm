@@ -10,7 +10,6 @@ import app.bank.application.usecases.NaturalClientUseCase;
 import app.bank.domain.models.NaturalClient;
 import app.bank.domain.models.enums.UserStatus;
 
-import java.sql.Date;
 
 @RestController
 @RequestMapping("/clients/natural")
