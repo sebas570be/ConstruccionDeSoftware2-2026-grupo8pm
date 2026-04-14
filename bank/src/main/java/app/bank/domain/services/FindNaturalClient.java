@@ -1,6 +1,5 @@
 package app.bank.domain.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import app.bank.domain.exceptions.NotFoundException;
 import app.bank.domain.models.NaturalClient;
@@ -9,8 +8,7 @@ import app.bank.domain.ports.NaturalClientPort;
 @Service
 public class FindNaturalClient {
 
-    @Autowired
-    private NaturalClientPort naturalClientPort;
+    private final NaturalClientPort naturalClientPort;
 
     public FindNaturalClient(NaturalClientPort naturalClientPort) {
         this.naturalClientPort = naturalClientPort;

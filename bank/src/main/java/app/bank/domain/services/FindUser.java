@@ -1,6 +1,5 @@
 package app.bank.domain.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import app.bank.domain.exceptions.NotFoundException;
 import app.bank.domain.models.User;
@@ -9,8 +8,7 @@ import app.bank.domain.ports.UserPort;
 @Service
 public class FindUser {
 
-    @Autowired
-    private UserPort userPort;
+    private final UserPort userPort;
 
     public FindUser(UserPort userPort) {
         this.userPort = userPort;

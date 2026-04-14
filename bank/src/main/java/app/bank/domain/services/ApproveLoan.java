@@ -1,6 +1,5 @@
 package app.bank.domain.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import app.bank.domain.exceptions.BusinessException;
 import app.bank.domain.models.Loan;
@@ -13,8 +12,7 @@ import java.math.BigDecimal;
 @Service
 public class ApproveLoan {
 
-    @Autowired
-    private LoanPort loanPort;
+    private final LoanPort loanPort;
 
     public ApproveLoan(LoanPort loanPort) {
         this.loanPort = loanPort;

@@ -1,6 +1,5 @@
 package app.bank.domain.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import app.bank.domain.exceptions.BusinessException;
 import app.bank.domain.models.Transfer;
@@ -14,10 +13,8 @@ import java.sql.Timestamp;
 @Service
 public class CreateTransfer {
 
-    @Autowired
-    private TransferPort transferPort;
-    @Autowired
-    private BankAccountPort bankAccountPort;
+    private final TransferPort transferPort;
+    private final BankAccountPort bankAccountPort;
 
     public CreateTransfer(TransferPort transferPort, BankAccountPort bankAccountPort) {
         this.transferPort = transferPort;

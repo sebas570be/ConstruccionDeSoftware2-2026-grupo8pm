@@ -1,6 +1,5 @@
 package app.bank.domain.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import app.bank.domain.exceptions.NotFoundException;
 import app.bank.domain.models.Company;
@@ -9,8 +8,7 @@ import app.bank.domain.ports.CompanyPort;
 @Service
 public class FindCompany {
 
-    @Autowired
-    private CompanyPort companyPort;
+    private final CompanyPort companyPort;
 
     public FindCompany(CompanyPort companyPort) {
         this.companyPort = companyPort;

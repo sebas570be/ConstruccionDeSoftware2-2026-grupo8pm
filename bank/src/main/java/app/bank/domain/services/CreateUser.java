@@ -1,6 +1,5 @@
 package app.bank.domain.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import app.bank.domain.exceptions.BusinessException;
 import app.bank.domain.models.User;
@@ -9,8 +8,7 @@ import app.bank.domain.ports.UserPort;
 @Service
 public class CreateUser {
 
-    @Autowired
-    private UserPort userPort;
+    private final UserPort userPort;
 
     public CreateUser(UserPort userPort) {
         this.userPort = userPort;

@@ -1,6 +1,5 @@
 package app.bank.domain.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import app.bank.domain.exceptions.NotFoundException;
 import app.bank.domain.models.BankAccount;
@@ -9,8 +8,7 @@ import app.bank.domain.ports.BankAccountPort;
 @Service
 public class FindBankAccount {
 
-    @Autowired
-    private BankAccountPort bankAccountPort;
+    private final BankAccountPort bankAccountPort;
 
     public FindBankAccount(BankAccountPort bankAccountPort) {
         this.bankAccountPort = bankAccountPort;

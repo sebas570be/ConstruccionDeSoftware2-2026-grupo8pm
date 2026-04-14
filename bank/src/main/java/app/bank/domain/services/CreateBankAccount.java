@@ -1,6 +1,5 @@
 package app.bank.domain.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import app.bank.domain.exceptions.BusinessException;
 import app.bank.domain.models.BankAccount;
@@ -11,12 +10,9 @@ import app.bank.domain.ports.CompanyPort;
 @Service
 public class CreateBankAccount {
 
-    @Autowired
-    private BankAccountPort bankAccountPort;
-    @Autowired
-    private NaturalClientPort naturalClientPort;
-    @Autowired
-    private CompanyPort companyPort;
+    private final BankAccountPort bankAccountPort;
+    private final NaturalClientPort naturalClientPort;
+    private final CompanyPort companyPort;
 
     public CreateBankAccount(BankAccountPort bankAccountPort, NaturalClientPort naturalClientPort, CompanyPort companyPort) {
         this.bankAccountPort = bankAccountPort;

@@ -1,6 +1,5 @@
 package app.bank.domain.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import app.bank.domain.exceptions.BusinessException;
 import app.bank.domain.models.Loan;
@@ -12,12 +11,9 @@ import app.bank.domain.ports.CompanyPort;
 @Service
 public class CreateLoan {
 
-    @Autowired
-    private LoanPort loanPort;
-    @Autowired
-    private NaturalClientPort naturalClientPort;
-    @Autowired
-    private CompanyPort companyPort;
+    private final LoanPort loanPort;
+    private final NaturalClientPort naturalClientPort;
+    private final CompanyPort companyPort;
 
     public CreateLoan(LoanPort loanPort, NaturalClientPort naturalClientPort, CompanyPort companyPort) {
         this.loanPort = loanPort;
