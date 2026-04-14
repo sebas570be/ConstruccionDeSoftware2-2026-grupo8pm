@@ -48,3 +48,4 @@ public class BitacoraPersistenceAdapter implements BitacoraEntryPort {
         return entry;
     }
 }
+
