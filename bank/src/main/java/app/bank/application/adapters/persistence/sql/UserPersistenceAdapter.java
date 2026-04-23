@@ -37,6 +37,11 @@ public class UserPersistenceAdapter implements UserPort {
         return toModel(repository.findByIdentificationNumber(identificationNumber));
     }
 
+    @Override
+    public User findByUsername(String username) {
+        return toModel(repository.findByUsername(username));
+    }
+
     private UserEntity toEntity(User user) {
         UserEntity e = new UserEntity();
         e.setFullName(user.getFullName());

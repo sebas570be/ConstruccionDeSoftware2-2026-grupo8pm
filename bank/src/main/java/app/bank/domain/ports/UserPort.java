@@ -7,4 +7,5 @@ public interface UserPort {
     public boolean existsByUsername(String username);
     public void save(User user);
     public User findByIdentificationNumber(String identificationNumber);
+    public User findByUsername(String username);
 }
