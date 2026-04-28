@@ -31,7 +31,9 @@ public class SecurityConfig {
             .sessionManagement(session -> session
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
+                    .requestMatchers(HttpMethod.POST, "/users").permitAll()
                     .requestMatchers("/auth/**").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/users").permitAll()
                     .requestMatchers("/users/**").hasRole("INTERNAL_ANALYST")
                     .requestMatchers("/clients/**").hasAnyRole("TELLER", "COMMERCIAL_EMPLOYEE", "INTERNAL_ANALYST")
                     .requestMatchers("/accounts/**").hasAnyRole("TELLER", "COMMERCIAL_EMPLOYEE", "INTERNAL_ANALYST")

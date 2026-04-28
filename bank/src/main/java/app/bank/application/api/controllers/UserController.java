@@ -3,6 +3,7 @@ package app.bank.application.api.controllers;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import app.bank.application.api.request.UserRequest;
 import app.bank.application.api.response.UserResponse;
@@ -16,14 +17,17 @@ import app.bank.domain.models.enums.UserStatus;
 public class UserController {
 
     private final UserUseCase userUseCase;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserController(UserUseCase userUseCase) {
+    public UserController(UserUseCase userUseCase, PasswordEncoder passwordEncoder) {
         this.userUseCase = userUseCase;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping
     public ResponseEntity<UserResponse> create(@Valid @RequestBody UserRequest request) {
         User user = toModel(request);
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         userUseCase.createUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(toResponse(user));
     }
@@ -39,6 +43,7 @@ public class UserController {
                                                 @Valid @RequestBody UserRequest request) {
         request.setIdentificationNumber(identificationNumber);
         User user = toModel(request);
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         userUseCase.updateUser(user);
         return ResponseEntity.ok(toResponse(user));
     }
