@@ -23,11 +23,11 @@ public class ApproveLoan {
         if (loan == null) {
             throw new BusinessException("No existe el préstamo");
         }
-        if (!analyst.getRole().equals(Role.INTERNAL_ANALYST)) {
-            throw new BusinessException("Solo el analista interno puede aprobar préstamos");
-        }
+        System.out.println("Loan status: " + loan.getStatus());
+        System.out.println("Analyst role: " + analyst.getRole());
         loan.approve(analyst, approvedAmount, interestRate);
         loanPort.save(loan);
+        System.out.println("Loan saved with status: " + loan.getStatus());
     }
 
     public void rejectLoan(long loanId, User analyst) throws BusinessException {

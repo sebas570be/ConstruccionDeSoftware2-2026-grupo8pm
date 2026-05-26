@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import app.bank.application.api.request.LoanRequest;
 import app.bank.application.api.response.LoanResponse;
 import app.bank.application.usecases.LoanUseCase;
+import app.bank.application.usecases.UserUseCase;
 import app.bank.domain.models.BankAccount;
 import app.bank.domain.models.Loan;
 import app.bank.domain.models.User;
@@ -20,9 +21,11 @@ import java.math.BigDecimal;
 public class LoanController {
 
     private final LoanUseCase loanUseCase;
+    private final UserUseCase userUseCase;
 
-    public LoanController(LoanUseCase loanUseCase) {
+    public LoanController(LoanUseCase loanUseCase, UserUseCase userUseCase) {
         this.loanUseCase = loanUseCase;
+        this.userUseCase = userUseCase;
     }
 
     @PostMapping
@@ -43,8 +46,7 @@ public class LoanController {
                                          @RequestParam String analystId,
                                          @RequestParam BigDecimal approvedAmount,
                                          @RequestParam BigDecimal interestRate) {
-        User analyst = new User();
-        analyst.setIdentificationNumber(analystId);
+        User analyst = userUseCase.findByIdentificationNumber(analystId);
         loanUseCase.approveLoan(id, analyst, approvedAmount, interestRate);
         return ResponseEntity.ok().build();
     }
@@ -52,8 +54,7 @@ public class LoanController {
     @PutMapping("/{id}/reject")
     public ResponseEntity<Void> reject(@PathVariable long id,
                                         @RequestParam String analystId) {
-        User analyst = new User();
-        analyst.setIdentificationNumber(analystId);
+        User analyst = userUseCase.findByIdentificationNumber(analystId);
         loanUseCase.rejectLoan(id, analyst);
         return ResponseEntity.ok().build();
     }
@@ -61,8 +62,7 @@ public class LoanController {
     @PutMapping("/{id}/disburse")
     public ResponseEntity<Void> disburse(@PathVariable long id,
                                           @RequestParam String analystId) {
-        User analyst = new User();
-        analyst.setIdentificationNumber(analystId);
+        User analyst = userUseCase.findByIdentificationNumber(analystId);
         loanUseCase.disburseLoan(id, analyst);
         return ResponseEntity.ok().build();
     }

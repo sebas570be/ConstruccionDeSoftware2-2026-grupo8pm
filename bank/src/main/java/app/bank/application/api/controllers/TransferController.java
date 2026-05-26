@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import app.bank.application.api.request.TransferRequest;
 import app.bank.application.api.response.TransferResponse;
 import app.bank.application.usecases.TransferUseCase;
+import app.bank.application.usecases.UserUseCase;
 import app.bank.domain.models.BankAccount;
 import app.bank.domain.models.Transfer;
 import app.bank.domain.models.User;
@@ -16,9 +17,11 @@ import app.bank.domain.models.User;
 public class TransferController {
 
     private final TransferUseCase transferUseCase;
+    private final UserUseCase userUseCase;
 
-    public TransferController(TransferUseCase transferUseCase) {
+    public TransferController(TransferUseCase transferUseCase, UserUseCase userUseCase) {
         this.transferUseCase = transferUseCase;
+        this.userUseCase = userUseCase;
     }
 
     @PostMapping
@@ -37,8 +40,7 @@ public class TransferController {
     @PutMapping("/{id}/approve")
     public ResponseEntity<Void> approve(@PathVariable long id,
                                          @RequestParam String supervisorId) {
-        User supervisor = new User();
-        supervisor.setIdentificationNumber(supervisorId);
+        User supervisor = userUseCase.findByIdentificationNumber(supervisorId);
         transferUseCase.approveTransfer(id, supervisor);
         return ResponseEntity.ok().build();
     }
@@ -46,8 +48,7 @@ public class TransferController {
     @PutMapping("/{id}/reject")
     public ResponseEntity<Void> reject(@PathVariable long id,
                                         @RequestParam String supervisorId) {
-        User supervisor = new User();
-        supervisor.setIdentificationNumber(supervisorId);
+        User supervisor = userUseCase.findByIdentificationNumber(supervisorId);
         transferUseCase.rejectTransfer(id, supervisor);
         return ResponseEntity.ok().build();
     }

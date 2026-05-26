@@ -1,6 +1,8 @@
 package app.bank.application.adapters.persistence.sql;
 
+import app.bank.domain.models.BankAccount;
 import app.bank.domain.models.Transfer;
+import app.bank.domain.models.User;
 import app.bank.domain.models.enums.TransferStatus;
 import app.bank.domain.ports.TransferPort;
 import app.bank.application.adapters.persistence.sql.entities.TransferEntity;
@@ -23,7 +25,20 @@ public class TransferPersistenceAdapter implements TransferPort {
 
     @Override
     public void save(Transfer transfer) {
-        repository.save(toEntity(transfer));
+        TransferEntity existing = repository.findTransferById(transfer.getId());
+        if (existing != null) {
+            existing.setAmount(transfer.getAmount());
+            existing.setCreationDate(transfer.getCreationDate());
+            existing.setApprovalDate(transfer.getApprovalDate());
+            existing.setStatus(transfer.getStatus() != null ? transfer.getStatus().toString() : null);
+            existing.setOriginAccount(transfer.getOriginAccount() != null ? transfer.getOriginAccount().getAccountNumber() : existing.getOriginAccount());
+            existing.setDestinationAccount(transfer.getDestinationAccount() != null ? transfer.getDestinationAccount().getAccountNumber() : existing.getDestinationAccount());
+            existing.setCreatorUserId(transfer.getCreatorUser() != null ? transfer.getCreatorUser().getId() : existing.getCreatorUserId());
+            existing.setApproverUserId(transfer.getApproverUser() != null ? transfer.getApproverUser().getId() : existing.getApproverUserId());
+            repository.save(existing);
+        } else {
+            repository.save(toEntity(transfer));
+        }
     }
 
     @Override
@@ -52,6 +67,27 @@ public class TransferPersistenceAdapter implements TransferPort {
         transfer.setCreationDate(e.getCreationDate());
         transfer.setApprovalDate(e.getApprovalDate());
         transfer.setStatus(e.getStatus() != null ? TransferStatus.valueOf(e.getStatus()) : null);
+
+        if (e.getOriginAccount() != null) {
+            BankAccount origin = new BankAccount();
+            origin.setAccountNumber(e.getOriginAccount());
+            transfer.setOriginAccount(origin);
+        }
+        if (e.getDestinationAccount() != null) {
+            BankAccount destination = new BankAccount();
+            destination.setAccountNumber(e.getDestinationAccount());
+            transfer.setDestinationAccount(destination);
+        }
+        if (e.getCreatorUserId() != null) {
+            User creator = new User();
+            creator.setId(e.getCreatorUserId());
+            transfer.setCreatorUser(creator);
+        }
+        if (e.getApproverUserId() != null) {
+            User approver = new User();
+            approver.setId(e.getApproverUserId());
+            transfer.setApproverUser(approver);
+        }
         return transfer;
     }
 }

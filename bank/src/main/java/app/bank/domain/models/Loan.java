@@ -26,6 +26,7 @@ public class Loan {
     private Date approvalDate;
     private Date disbursementDate;
     private BankAccount disbursementAccount;
+    private String disbursementAccountNumber;
     private User analystApprover;
 
     public void validateRequestedAmount() {

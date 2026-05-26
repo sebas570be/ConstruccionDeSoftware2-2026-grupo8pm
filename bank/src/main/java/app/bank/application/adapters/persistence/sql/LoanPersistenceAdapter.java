@@ -24,7 +24,23 @@ public class LoanPersistenceAdapter implements LoanPort {
 
     @Override
     public void save(Loan loan) {
-        repository.save(toEntity(loan));
+        LoanEntity existing = repository.findLoanById(loan.getId());
+        if (existing != null) {
+            existing.setLoanType(loan.getLoanType() != null ? loan.getLoanType().toString() : null);
+            existing.setClientId(loan.getClientId());
+            existing.setRequestedAmount(loan.getRequestedAmount());
+            existing.setApprovedAmount(loan.getApprovedAmount());
+            existing.setInterestRate(loan.getInterestRate());
+            existing.setTermMonths(loan.getTermMonths());
+            existing.setStatus(loan.getStatus() != null ? loan.getStatus().toString() : null);
+            existing.setApprovalDate(loan.getApprovalDate());
+            existing.setDisbursementDate(loan.getDisbursementDate());
+            existing.setDisbursementAccountNumber(loan.getDisbursementAccountNumber() != null ? loan.getDisbursementAccountNumber() : loan.getDisbursementAccount() != null ? loan.getDisbursementAccount().getAccountNumber() : null);
+            existing.setAnalystApproverId(loan.getAnalystApprover() != null ? loan.getAnalystApprover().getId() : null);
+            repository.save(existing);
+        } else {
+            repository.save(toEntity(loan));
+        }
     }
 
     @Override
@@ -61,7 +77,7 @@ public class LoanPersistenceAdapter implements LoanPort {
         loan.setStatus(e.getStatus() != null ? LoanStatus.valueOf(e.getStatus()) : null);
         loan.setApprovalDate(e.getApprovalDate());
         loan.setDisbursementDate(e.getDisbursementDate());
+        loan.setDisbursementAccountNumber(e.getDisbursementAccountNumber());
         return loan;
     }
 }
-

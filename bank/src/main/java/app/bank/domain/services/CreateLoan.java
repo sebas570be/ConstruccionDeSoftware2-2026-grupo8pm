@@ -28,6 +28,9 @@ public class CreateLoan {
         }
         loan.validateRequestedAmount();
         loan.setStatus(LoanStatus.IN_STUDY);
+        if (loan.getDisbursementAccount() != null) {
+            loan.setDisbursementAccountNumber(loan.getDisbursementAccount().getAccountNumber());
+        }
         loanPort.save(loan);
     }
 }

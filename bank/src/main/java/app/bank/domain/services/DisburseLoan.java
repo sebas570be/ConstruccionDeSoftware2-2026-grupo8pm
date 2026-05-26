@@ -28,8 +28,11 @@ public class DisburseLoan {
         if (!analyst.getRole().equals(Role.INTERNAL_ANALYST)) {
             throw new BusinessException("Solo el analista interno puede desembolsar préstamos");
         }
-        BankAccount account = bankAccountPort.findByAccountNumber(
-            loan.getDisbursementAccount().getAccountNumber());
+        String accountNumber = loan.getDisbursementAccountNumber();
+        if (accountNumber == null) {
+            throw new BusinessException("No hay cuenta de desembolso definida");
+        }
+        BankAccount account = bankAccountPort.findByAccountNumber(accountNumber);
         if (account == null) {
             throw new BusinessException("La cuenta destino no existe");
         }
